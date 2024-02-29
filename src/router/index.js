@@ -61,6 +61,30 @@ let routes = [
         ]
       },
 
+      //材料上传
+      {
+        path: 'user',
+        name: 'user',
+        meta: {
+          title: '材料',
+          icon: 'sg sg-dashboard',
+        },
+        component: () => import(/* webpackChunkName: "后台模板" */ '../views/blank'),
+          children: [
+          {
+            path: 'MeaterialUpload',
+            name: 'MeaterialUpload',
+            meta: {
+              icon: 'sg sg-jiaosequanxian',
+              title: '材料上传',
+            },
+            component: () => import(/* webpackChunkName: "角色管理" */ '../views/MaterialUpload/index'),
+          },
+
+          
+        ]
+      },
+
 
       // {
       //   path: 'system',
