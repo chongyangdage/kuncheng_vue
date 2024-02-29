@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     toHome() {
-      this.$router.push("/home");
+      this.$router.push("/");
     },
     dianji() {},
   },

@@ -68,3 +68,35 @@ export function addPay(data) {
         params: data //向后台返回的数据
     })
 }
+
+
+
+//修改人员工资
+export function editPay(data) {
+    return request({
+        url: '/editPay', //请求url
+        method: 'get', //这里方法的类型可以写get,post,put,delete
+        params: data //向后台返回的数据
+    })
+}
+
+
+//修改人员工资
+export function delePay(data) {
+    return request({
+        url: '/delePay', //请求url
+        method: 'get', //这里方法的类型可以写get,post,put,delete
+        params: data //向后台返回的数据
+    })
+}
+
+
+
+//上传附件fileId  file
+export function uploadFile(data) {
+    return request({
+        url: '/uploadFile', //请求url
+        method: 'post', //这里方法的类型可以写get,post,put,delete
+        data: data //向后台返回的数据
+    })
+}
