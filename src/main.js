@@ -8,6 +8,10 @@ import network from "@/network";
 // 全局方法挂载
 Vue.prototype.$network = network;
 
+import echarts from 'echarts'
+//需要挂载到Vue原型上
+Vue.prototype.$echarts = echarts
+
 // 全局组件挂载
 
 // 全局主题样式

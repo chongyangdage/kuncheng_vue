@@ -18,7 +18,7 @@
           <el-input v-model="ruleFormPay.day"></el-input>
         </el-form-item>
         <el-form-item label="应付/元" prop="accountsPayable">
-          <el-input v-model="ruleFormPay.accountsPayable"></el-input>
+          <el-input disabled v-model="ruleFormPay.accountsPayable"></el-input>
         </el-form-item>
         <el-form-item label="实付/元" prop="actualPayment">
           <el-input v-model="ruleFormPay.actualPayment"></el-input>
@@ -49,7 +49,7 @@
 
         <el-table-column align="center" label="已工作天数" prop="day">
         </el-table-column>
-        <el-table-column align="center" label="应付/元" prop="accountsPayable">
+        <el-table-column  align="center" label="应付/元" prop="accountsPayable">
         </el-table-column>
 
         <el-table-column align="center" label="实付/元" prop="actualPayment">
@@ -185,6 +185,16 @@ export default {
       search: "",
       title: "添加",
     };
+  },
+  watch: {
+    ruleFormPay: {
+      handler(newValue, oldValue) {
+        if(newValue.dayPrice&&newValue.day){
+          this.ruleFormPay.accountsPayable  =Number(newValue.dayPrice)*Number( newValue.day)
+        }
+      },
+      deep: true
+    },
   },
   created() {
     this.getUserList();

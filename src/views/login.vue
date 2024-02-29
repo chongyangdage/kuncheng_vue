@@ -148,7 +148,7 @@ export default {
             });
             setTimeout(() => {
               this.loading = false;
-              this.$router.push("/statistics");
+              this.$router.push("/");
             }, 300);
           }else{
             this.$message({

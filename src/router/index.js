@@ -25,6 +25,15 @@ let routes = [
         path: 'home',
         name: 'home',
         meta: {
+          title: '首页',
+          icon: 'sg sg-dashboard',
+        },
+        component: () => import(/* webpackChunkName: "后台模板" */ '../views/routesPage/home'),
+      },
+      {
+        path: 'user',
+        name: 'user',
+        meta: {
           title: '人员管理',
           icon: 'sg sg-dashboard',
         },
@@ -82,14 +91,7 @@ let routes = [
     },
     component: () => import(/* webpackChunkName: "登录" */ '../views/login'),
   },
-  {
-    path: '/statistics',
-    name: 'statistics',
-    meta: {
-      title: '统计',
-    },
-    component: () => import(/* webpackChunkName: "登录" */ '../views/statistics'),
-  },
+
   {
     path: '/register',
     name: 'register',

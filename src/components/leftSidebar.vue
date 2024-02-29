@@ -12,19 +12,19 @@
         <!-- 最多三级，别再多了 φ(*￣0￣) -->
         <div class="navbar">
             <!-- v-if="item.hidden !=true" -->
-            <div class="navbar-one-container" v-for="item in navData" >
+            <div class="navbar-one-container" v-for="(item,index1) in navData" :key="index1">
                 <div :class="['navbar-one','/'+item.path == nowRoute?'nowRoute':''] " @click="navBigPath(item)"
                     :title="item.meta.title">
                     <p><i :class="item.meta.icon"></i><span>{{item.meta.title}}</span></p>
                     <p class="el-icon-arrow-down" v-show="item.children != undefined"></p>
                 </div>
-                <div class="navbar_two_container" v-for="itemtwo in item.children" :style="`height:${item.height}`">
+                <div class="navbar_two_container" v-for="(itemtwo,index2) in item.children" :key="index2" :style="`height:${item.height}`">
                     <div :class="['navbar-two','/'+item.path+'/'+itemtwo.path == nowRoute?'nowRoute':'']"
                         @click="navBigPath(item ,itemtwo)">
                         <p><i :class="itemtwo.meta.icon"></i><span>{{itemtwo.meta.title}}</span></p>
                         <p class="el-icon-arrow-down" v-show="itemtwo.children != undefined"></p>
                     </div>
-                    <div class="navbar-three-container" v-for="itemThree in itemtwo.children"
+                    <div class="navbar-three-container" v-for="(itemThree,index) in itemtwo.children" :key="index"
                         :style="'height:'+itemtwo.height">
                         <div :class="['navbar-three','/'+item.path+'/'+itemtwo.path+'/'+itemThree.path == nowRoute?'nowRoute':'']"
                             @click="navBigPath(item ,itemtwo, itemThree)">
