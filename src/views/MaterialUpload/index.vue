@@ -1,6 +1,6 @@
 <template>
     <div>
-        材料上传
+   
         
 
         <FileUpload></FileUpload>

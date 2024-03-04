@@ -97,6 +97,26 @@ export function uploadFile(data) {
     return request({
         url: '/uploadFile', //请求url
         method: 'post', //这里方法的类型可以写get,post,put,delete
-        data: data //向后台返回的数据
+        params: data //向后台返回的数据
+    })
+}
+
+
+//查询附件fileId  
+export function selectFile(data) {
+    return request({
+        url: '/selectFile', //请求url
+        method: 'post', //这里方法的类型可以写get,post,put,delete
+        params: data //向后台返回的数据
+    })
+}
+
+
+//删除附件id 
+export function deleFile(data) {
+    return request({
+        url: '/deleFile', //请求url
+        method: 'post', //这里方法的类型可以写get,post,put,delete
+        params: data //向后台返回的数据
     })
 }
