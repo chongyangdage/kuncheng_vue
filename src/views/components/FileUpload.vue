@@ -1,8 +1,11 @@
 <template>
     <div>
-        <el-upload class="upload-demo" action="/uploadFile" :headers="headers" :data="filesData"
+        <el-image style="width: 0px; height: 0px;z-index:9999" :src="url" ref="preview" class="bigImg upload-demo"
+            :preview-src-list="srcList">
+        </el-image>
+        <el-upload accept=".png,.jpg" list-type="picture" :on-success="success" class="upload-demo" action="/uploadFile" :headers="headers" :data="filesData"
             :before-upload="beforeFiles" :on-preview="handlePreview" :on-remove="handleRemove"
-            :before-remove="beforeRemove" multiple  :on-exceed="handleExceed" :file-list="fileList">
+            :before-remove="beforeRemove" multiple :on-exceed="handleExceed" :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
@@ -14,30 +17,40 @@ import { uploadFile, selectFile, deleFile } from "@/api/user";
 export default {
     data() {
         return {
+            url: "",
+            srcList: [
+
+            ],
             baseURL: process.env.VUE_APP_BASE_TOMCAT,
-            fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }],
+            fileList: [],
             filesData: { fileId: '1' },
             headers: { token: localStorage.getItem("token") },
-            fileId:'1'
+            fileId: '1'
         };
     },
-    created(){
-this.getFiles()
+    created() {
+        this.getFiles()
     },
     methods: {
-        getFiles(){
+        //上传成功
+        success() {
+            this.getFiles()
+        },
+        //获取附件
+
+        getFiles() {
             // F:\\tomcat\\apache-tomcat-9.0.56\\webapps\\imgs
-            this.fileList=[]
-            selectFile({fileId:this.fileId}).then(res=>{
-                res.data.forEach(element => {         
-                    this.fileList.push({url:element.name,name:element.originalName,id:element.id,fileId:element.fileId})
+            this.fileList = []
+            selectFile({ fileId: this.fileId }).then(res => {
+                res.data.forEach(element => {
+                    this.fileList.push({ url: this.baseURL + element.name, name: element.originalName, id: element.id, fileId: element.fileId })
                 });
                 console.log(this.fileList)
             })
         },
         //上传之前
         beforeFiles(file) {
-            console.log(file)
+     
 
         },
         //删除
@@ -48,12 +61,28 @@ this.getFiles()
                         type: "success",
                         message: res.message,
                     });
+                    this.getFiles()
                 }
             })
         },
         handlePreview(file) {
-            console.log(file,'ppp');
-             window.location.href=this.baseURL+file.url
+            this.srcList = []
+
+            if (file.name.indexOf('.jpg') != -1 || file.name.indexOf('.png') != -1) {
+                this.url =  file.url;
+                this.srcList.push( file.url);
+                console.log(this.srcList, 'ppp');
+                setTimeout(() => {
+                    this.$refs.preview.clickHandler();
+                }, 100)
+
+            } else {
+                // console.log(this.baseURL + file.url)
+                // return
+                window.location.href =  file.url
+            }
+
+
         },
         handleExceed(files, fileList) {
             this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
@@ -64,3 +93,18 @@ this.getFiles()
     }
 }
 </script>
+
+<style scoped>
+.bigImg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+}
+/deep/
+.el-upload-list--picture .el-upload-list__item{
+    width: 40% !important;
+}
+</style>
